@@ -127,6 +127,18 @@ The currency value class for representing and manipulating monetary values.
 
 ```typescript
 import { CurrencyValue } from '@typescript-package/currency';
+
+const value = new CurrencyValue(42345255.356, 'USD');
+
+value.valueOf(); // 42345255.356
+value.currency; // USD
+value.of; // 42345255.356
+value.currencySymbol; // $
+value.formatted; // 42,345,255.36
+value.getValueAsCurrency('USD'); // $42,345,255.36
+value.isBetweenEvery([43345255, 52345255.356]); // false
+value.lessThan(52345255.356); // true
+
 ```
 
 ### `Exchange`
