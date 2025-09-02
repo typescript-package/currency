@@ -1,45 +1,44 @@
-// Type.
-import { AllCurrencies } from '@typedly/currency';
+
 /**
  * @description
  * @export
  * @class Currencies
- * @template {string} Names 
+ * @template {string} Codes 
  */
-export class Currencies<Names extends string> {
+export class Currencies<Codes extends string> {
   /**
    * @description
    * @public
    * @readonly
-   * @type {Set<AllCurrencies<Names>>}
+   * @type {Set<Codes>}
    */
-  public get currencies(): Set<AllCurrencies<Names>> {
-    return this.#currencies;
+  public get codes(): Set<Codes> {
+    return this.#codes;
   }
 
   /**
    * @description
-   * @type {Set<AllCurrencies<Names>>}
+   * @type {Set<Codes>}
    */
-  #currencies: Set<AllCurrencies<Names>> = new Set();
+  #codes: Set<Codes> = new Set();
 
   /**
    * Creates an instance of `Currencies`.
    * @constructor
-   * @param {...AllCurrencies<Names>[]} currencies 
+   * @param {...Codes[]} codes 
    */
-  constructor(...currencies: AllCurrencies<Names>[]) {
-    this.add(...currencies);
+  constructor(...codes: Codes[]) {
+    this.add(...codes);
   }
 
   /**
    * @description
    * @public
-   * @param {...AllCurrencies<Names>[]} currencies 
+   * @param {...Codes>[]} codes 
    * @returns {this} 
    */
-  public add(...currencies: AllCurrencies<Names>[]): this {
-    currencies.forEach((currency) => this.#currencies.add(currency as Names));
+  public add(...codes: Codes[]): this {
+    codes.forEach(code => this.#codes.add(code as Codes));
     return this;
   }
 
@@ -49,41 +48,37 @@ export class Currencies<Names extends string> {
    * @returns {this} 
    */
   public clear(): this {
-    this.#currencies.clear();
+    this.#codes.clear();
     return this;
   }
 
   /**
    * @description
    * @public
-   * @param {...AllCurrencies<Names>[]} currencies 
+   * @param {...Codes[]} codes 
    * @returns {this} 
    */
-  public delete(...currencies: AllCurrencies<Names>[]): this {
-    currencies.forEach((currency) =>
-      this.#currencies.delete(currency as Names)
-    );
+  public delete(...codes: Codes[]): this {
+    codes.forEach(code => this.#codes.delete(code as Codes));
     return this;
   }
 
   /**
    * @description
    * @public
-   * @returns {AllCurrencies<Names>[]} 
+   * @returns {Codes[]} 
    */
-  public getCurrencies(): AllCurrencies<Names>[] {
-    return Array.from(this.#currencies.values()) as AllCurrencies<Names>[];
+  public getCurrencies(): Codes[] {
+    return Array.from(this.#codes.values()) as Codes[];
   }
 
   /**
    * @description
    * @public
-   * @param {...AllCurrencies<Names>[]} currencies 
+   * @param {...Codes[]} codes 
    * @returns {boolean} 
    */
-  public has(...currencies: AllCurrencies<Names>[]): boolean {
-    return currencies.every((currency) =>
-      this.#currencies.has(currency as Names)
-    );
+  public has(...codes: Codes[]): boolean {
+    return codes.every(code => this.#codes.has(code as Codes));
   }
 }
