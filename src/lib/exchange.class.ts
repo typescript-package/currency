@@ -3,12 +3,12 @@ import { Conversion } from './conversion.class';
 // Type.
 import { ConversionRates } from '@typedly/currency';
 /**
- * @description
+ * @description The `Exchange` class provides functionality to fetch and manage currency exchange rates, and perform conversions using the `Conversion` class.
  * @export
  * @class Exchange
- * @template {number} Amount 
- * @template {string} [Currency=string] 
- * @template {string} [Currencies=string] 
+ * @template {number} Amount The type of the amount.
+ * @template {string} [Currency=string] The type of the currency.
+ * @template {string} [Currencies=string] The type of currencies.
  */
 export class Exchange<
   Amount extends number,
@@ -27,7 +27,7 @@ export class Exchange<
   }
 
   /**
-   * @description Sets the api link.
+   * @description Sets the default instance api link.
    * @public
    * @static
    * @param {string} url 
@@ -37,14 +37,14 @@ export class Exchange<
   }
 
   /**
-   * @description
+   * @description Privately stored default api link.
    * @static
    * @type {string}
    */
   static #defaultApi: string = '';
 
   /**
-   * @description
+   * @description Returns the instance api link.
    * @public
    * @returns {string} 
    */
@@ -53,17 +53,47 @@ export class Exchange<
   }
 
   /**
-   * @description
+   * @description Returns the amount to convert.
    * @public
    * @readonly
-   * @type {number}
+   * @type {Amount}
    */
-  public get amount(): number {
+  public get amount(): Amount {
     return this.#conversion.amount;
   }
 
   /**
-   * @description
+   * @description Returns the `Conversion` instance.
+   * @public
+   * @readonly
+   * @type {Conversion<Amount, Currency, Currencies>}
+   */
+  public get conversion(): Conversion<Amount, Currency, Currencies> {
+    return this.#conversion;
+  }
+
+  /**
+   * @description Returns the base currency code.
+   * @public
+   * @readonly
+   * @type {Currency}
+   */
+  public get currency(): Currency {
+    return this.#conversion.currency;
+  }
+
+  /**
+   * @description Returns the list of all currencies available for conversion.
+   * @public
+   * @readonly
+   * @type {Currencies[]}
+   */
+  public get currencies(): Currencies[] {
+    return this.#currencies;
+  }
+
+  /**
+   * @description Returns the exchange rates in object.
    * @public
    * @readonly
    * @type {ConversionRates<Currencies>}
@@ -73,46 +103,55 @@ export class Exchange<
   }
 
   /**
-   * @description
-   * @param {any} apiResult 
-   * @returns {ConversionRates<Currencies>} 
+   * @description Privately stored adapter function to resolve the API response.
+   * @param {any} apiResult
+   * @returns {ConversionRates<Currencies>}
    */
   #adapter: (apiResult: any) => ConversionRates<Currencies> = (apiResult: any) => apiResult.conversion_rates;
 
   /**
-   * @description
+   * @description Privately stored API URL.
    * @type {string}
    */
   #apiUrl: string = Exchange.#defaultApi;
 
   /**
-   * @description
+   * @description Privately stored conversion class instance.
    * @type {Conversion<Amount, Currency, Currencies>}
    */
   #conversion: Conversion<Amount, Currency, Currencies>;
 
   /**
+   * @description Privately stored currencies available for conversion.
+   * @type {Currencies[]}
+   */
+  #currencies: Currencies[];
+
+  /**
    * Creates an instance of `Exchange`.
    * @constructor
-   * @param {Amount} amount 
-   * @param {Currency} currency 
-   * @param {ConversionRates<Currencies>} [exchangeRates] 
-   * @param {string} [apiUrl]
+   * @param {Amount} amount The amount to convert the given currency.
+   * @param {Currency} currency The currency to convert.
+   * @param {Currencies[]} currencies The currencies to convert to/from.
+   * @param {ConversionRates<Currencies>} [exchangeRates] The exchange rates for the conversion.
+   * @param {string} [apiUrl] The api url to fetch exchange rates.
    */
   constructor(
     amount: Amount,
     currency: Currency,
+    currencies: Currencies[] = [],
     exchangeRates?: ConversionRates<Currencies>,
     apiUrl?: string,
     adapter?: (apiResult: any) => ConversionRates<Currencies>,
   ) {
     this.#conversion = new Conversion<Amount, Currency, Currencies>(amount, currency, exchangeRates);
+    this.#currencies = currencies;
     apiUrl && this.#apiUrl !== apiUrl && (this.#apiUrl = apiUrl);
     adapter && (this.#adapter = adapter);
   }
 
   /**
-   * @description
+   * @description Fetches the api url to obtain the exchange rates.
    * @public
    * @param {Currency} [currency=this.#conversion.currency] The currency to fetch the exchange rate for.
    * @returns {Promise<Response>} 
@@ -122,13 +161,13 @@ export class Exchange<
   }
 
   /**
-   * @description
+   * @description Converts the given amount from currency to base currency.
    * @public
    * @async
-   * @template {Currencies} FromCurrency 
-   * @param {FromCurrency} currency 
-   * @param {Amount} [amount=this.#conversion.amount] 
-   * @returns {Promise<number>} 
+   * @template {Currencies} FromCurrency
+   * @param {FromCurrency} currency The currency to convert from.
+   * @param {Amount} [amount=this.#conversion.amount] The custom amount to convert.
+   * @returns {Promise<number>}
    */
   public async from<FromCurrency extends Currencies>(
     currency: FromCurrency,
@@ -138,12 +177,12 @@ export class Exchange<
   }
 
   /**
-   * @description
+   * @description Converts the given amount from multiple currencies to base currency.
    * @public
    * @async
    * @template {Currencies} FromCurrencies 
-   * @param {FromCurrencies} currencies 
-   * @param {Amount} [amount=this.#conversion.amount] 
+   * @param {FromCurrencies} currencies Multiple currencies to convert to base currency.
+   * @param {Amount} [amount=this.#conversion.amount] The custom amount to convert.
    * @returns {Promise<number>} 
    */
   public async fromMany<FromCurrencies extends Currencies>(
@@ -154,7 +193,7 @@ export class Exchange<
   }
 
   /**
-   * @description
+   * @description Converts base currency of the given or base amount to the specified currency.
    * @public
    * @async
    * @template {Currencies} ToCurrency 
@@ -170,7 +209,7 @@ export class Exchange<
   }
 
   /**
-   * @description
+   * @description Converts base currency of the given or base amount to the specified currencies.
    * @public
    * @async
    * @template {Currencies} ToCurrencies 
@@ -186,7 +225,7 @@ export class Exchange<
   }
     
   /**
-   * @description
+   * @description Updates the exchange rates from the api.
    * @public
    * @async
    * @returns {Promise<this>} 
