@@ -5,12 +5,12 @@ import { ValueWithCurrency } from '@typedly/currency';
 // Interface.
 import { CurrencyValueOptions } from '@typedly/currency';
 /**
- * @description
+ * @description The currency value 
  * @export
  * @class CurrencyValue
- * @template {number} [Value=number] 
- * @template {string} [Currency=string] 
- * @template {string} [Currencies=string] 
+ * @template {number} [Value=number] The type of the value.
+ * @template {string} [Currency=string] The type of currency.
+ * @template {string} [Currencies=string] The type of currencies.
  * @extends {Number<Value>}
  */
 export class CurrencyValue<
@@ -19,7 +19,7 @@ export class CurrencyValue<
   Currencies extends string = string
 > extends Number<Value> {
   /**
-   * @description
+   * @description Returns the locales.
    * @public
    * @static
    * @type {string}
@@ -92,7 +92,7 @@ export class CurrencyValue<
   }
 
   /**
-   * @description
+   * @description Returns the resolved options for currency formatting.
    * @public
    * @readonly
    * @type {CurrencyValueOptions}
@@ -106,7 +106,7 @@ export class CurrencyValue<
   }
 
   /**
-   * @description
+   * @description Returns the formatted value.
    * @public
    * @readonly
    * @type {string}
@@ -136,7 +136,7 @@ export class CurrencyValue<
   }
 
   /**
-   * @description The value.
+   * @description The raw value.
    * @public
    * @readonly
    * @type {Value}
@@ -157,7 +157,7 @@ export class CurrencyValue<
   }
 
   /**
-   * @description
+   * @description Privately stored currency.
    * @type {Currency}
    */
   #currency: Currency;
