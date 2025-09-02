@@ -265,24 +265,6 @@ export class CurrencyValue<
 
   /**
    * @description
-   * @public
-   * @static
-   * @param {string} code 
-   * @param {('wide' | 'narrow')} [format='narrow'] 
-   * @param {string} [locales=this.locales] 
-   * @returns {string} 
-   */
-  public static getCurrencySymbol(
-    code: string,
-    format: 'wide' | 'narrow' = 'narrow',
-    locales = this.locales
-  ): string {
-    return void(0) as any;
-    // return getCurrencySymbol(code, format, locales);
-  }
-
-  /**
-   * @description
    * @private
    * @static
    * @param {*} value 
