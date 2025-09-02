@@ -5,7 +5,7 @@ import { ValueWithCurrency } from '@typedly/currency';
 // Interface.
 import { CurrencyValueOptions } from '@typedly/currency';
 /**
- * @description The currency value 
+ * @description The currency value class for representing and manipulating monetary values.
  * @export
  * @class CurrencyValue
  * @template {number} [Value=number] The type of the value.
