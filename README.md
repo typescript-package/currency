@@ -67,11 +67,87 @@ import {
 } from '@typescript-package/currency';
 ```
 
+### `Conversion`
+
+```typescript
+import { Conversion } from '@typescript-package/currency';
+
+const conversion = new Conversion(15 as number, 'PLN', { 'USD': 0.275, 'EUR': 0.2347 });
+
+conversion.amount; // 15
+conversion.currency; // PLN
+conversion.currencies; // ['USD', 'EUR']
+
+conversion.getConversionRates(); // { 'USD': 0.275, 'EUR': 0.2347 }
+conversion.conversionRates; // Map([["USD", 0.275], ["EUR", 0.2347 ]]);
+
+// Convert PLN to USD.
+conversion.to('USD'); // 4.125
+// Convert 15 PLN to EUR.
+conversion.to('EUR', 15); // 3.5204999999999997
+
+// Convert USD and EUR to PLN.
+conversion.toMany(['USD', 'EUR']); // { USD: 4.125, EUR: 3.5204999999999997 }
+// Convert 10 USD and 10 EUR to PLN.
+conversion.toMany(['USD', 'EUR'], 10); // { USD: 2.75, EUR: 2.347 }
+// Convert and sum USD and EUR.
+conversion.sumTo(['USD', 'EUR'], 10); // 5.0969999999999995
+
+// Convert USD to PLN.
+conversion.from('USD'); // 54.54545454545454
+// Convert custom 15 EUR to PLN.
+conversion.from('EUR', 15); // 63.911376224968045
+
+// Convert 10 USD and 10 EUR to PLN.
+conversion.fromMany(['USD', 'EUR']); // { USD: 54.54545454545454, EUR: 63.911376224968045 }
+conversion.fromMany(['USD', 'EUR'], 10); // { "USD": 36.36363636363636, "EUR": 42.6075841499787 }
+conversion.sumFrom(['USD', 'EUR'], 10); // 78.97122051361507
+
+// Set amount to 5 PLN.
+conversion.setAmount(5);
+
+// Convert 5 PLN to EUR.
+conversion.to('EUR'); // 1.1735
+
+```
+
 ### `Currencies`
+
+```typescript
+import { Currencies } from '@typescript-package/currency';
+```
 
 ### `CurrencyValue`
 
+```typescript
+import { CurrencyValue } from '@typescript-package/currency';
+```
+
 ### `Exchange`
+
+```typescript
+import { Exchange } from '@typescript-package/currency';
+
+const exchange = new Exchange(
+  15 as number, // number
+  'PLN',        // base currency code
+  ['USD', 'EUR'], // currencies for exchanges
+  { 'USD': 0.275, 'EUR': 0.2347 } // custom exchanges
+  // link for exchange api
+);
+
+exchange.amount; // 15
+exchange.currency; // PLN
+exchange.currencies; // ['USD', 'EUR']
+
+exchange.exchangeRates; // { 'USD': 0.275, 'EUR': 0.2347 }
+
+exchange.to('USD').then(result => console.debug(`exchange.to('USD')`, result)); // 4.125
+exchange.to('EUR', 15).then(result => console.debug(`exchange.to('EUR', 15)`, result)); // 3.5204999999999997
+
+exchange.from('USD').then(result => console.debug(`exchange.from('USD')`, result)); // 54.54545454545454
+exchange.from('EUR', 15).then(result => console.debug(`exchange.from('EUR', 15)`, result)); // 63.911376224968045
+```
 
 ## Contributing
 
