@@ -69,6 +69,8 @@ import {
 
 ### `Conversion`
 
+The concrete class implementation for currency conversion.
+
 ```typescript
 import { Conversion } from '@typescript-package/currency';
 
@@ -113,17 +115,23 @@ conversion.to('EUR'); // 1.1735
 
 ### `Currencies`
 
+The class to store codes of the currencies.
+
 ```typescript
 import { Currencies } from '@typescript-package/currency';
 ```
 
 ### `CurrencyValue`
 
+The currency value class for representing and manipulating monetary values.
+
 ```typescript
 import { CurrencyValue } from '@typescript-package/currency';
 ```
 
 ### `Exchange`
+
+The `Exchange` class provides functionality to fetch and manage currency exchange rates, and perform conversions using the `Conversion` class.
 
 ```typescript
 import { Exchange } from '@typescript-package/currency';
