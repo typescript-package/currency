@@ -20,8 +20,10 @@ A **lightweight** TypeScript package for conversion/exchanges fiat or cryptocurr
 - [Installation](#installation)
 - [Api](#api)
   - **Abstract**
-    - `Conversion`
+    - `ConversionBase`
+    - `ConversionCore`
   - **Class**
+    - `Conversion`
     - `Currencies`
     - `CurrencyValue`
     - `Exchange`
@@ -55,8 +57,10 @@ npm install @typescript-package/currency --save-peer
 ```typescript
 import {
   // Abstract.
-  Conversion,
+  ConversionBase,
+  ConversionCore,
   // Class.
+  Conversion,
   Currencies,
   CurrencyValue,
   Exchange
