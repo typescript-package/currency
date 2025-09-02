@@ -245,12 +245,12 @@ export class Exchange<
   }
 
   /**
-   * @description
+   * @description Helper method to perform actions after fetching and updating exchange rates.
    * @private
    * @async
-   * @template T 
-   * @param {(conversion: Conversion<Amount, Currency, Currencies>) => T} callbackFn 
-   * @returns {Promise<T>} 
+   * @template T
+   * @param {(conversion: Conversion<Amount, Currency, Currencies>) => T} callbackFn The callback function to execute with conversion.
+   * @returns {Promise<T>}
    */
   private async onFetch<T>(
     callbackFn: (conversion: Conversion<Amount, Currency, Currencies>) => T
