@@ -1,25 +1,27 @@
-import {
-  Conversion,
-  Currencies,
-  CurrencyValue,
-  Exchange,
-} from "../lib";
+import { Exchange } from "../lib";
+import { CONVERSION_RATES } from "./conversion.rates";
 
-const EXCHANGE = new Exchange(3500, "PLN", {"USD": 3.88});
+describe(`Exchange`, () => {
+  let exchange = new Exchange(15 as number, 'PLN');
+  beforeEach(() => exchange = new Exchange(15 as number, 'PLN', CONVERSION_RATES))
 
-console.log(`amount: `, EXCHANGE.to("USD"));
-// console.log(`amount: `, EXCHANGE.amount);
-console.log(`fromCurrency: `, EXCHANGE.fromCurrency);
-// console.log(`to("USD")`, EXCHANGE.setAmount(3500).to("USD")); // 
-// console.log(``, EXCHANGE.toMany(
-//   (exchanged) => { console.log(`exchanged: `, exchanged); },
-//   (reason) => { console.log('reason: '); return reason; },
-//   "EUR",
-//   "USD",
-// )); // Object{EUR: 'EUR 819.00', USD: 'USD 906.50'}
+  it(`should properly calculate in to method`, async () => {
+    await expectAsync(exchange.to('USD')).toBeResolvedTo(4.125);
+  });
+  it(`should properly calculate in toMany method`, async () => {
+    await expectAsync(exchange.toMany(['USD', 'EUR'])).toBeResolvedTo({
+      'USD': 4.125,
+      'EUR': 3.5204999999999997
+    });
+  });
 
-describe("Exchange()", () => {
-  it("to('USD') toEqual $902.06", () => {
-    expect(EXCHANGE.to("USD")).toEqual('$902.06');
+  it(`should properly calculate in from method`, async () => {
+    await expectAsync(exchange.from('USD')).toBeResolvedTo(54.54545454545454);
+  });
+  it(`should properly calculate in fromMany method`, async () => {
+    await expectAsync(exchange.fromMany(['USD', 'EUR'])).toBeResolvedTo({
+      'USD': 54.54545454545454,
+      'EUR': 63.911376224968045
+    });
   });
 });
