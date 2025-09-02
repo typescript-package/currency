@@ -76,7 +76,6 @@ export abstract class ConversionBase<
     currency: Currencies,
     amount: Amount = this.amount
   ): number {
-    console.log(amount, super.conversionRates.get(currency));
     return new CurrencyValue(
       amount / super.conversionRates.get(currency)!,
       this.currency
@@ -96,7 +95,7 @@ export abstract class ConversionBase<
     amount: Amount = this.amount
   ): ConversionRates<FromCurrencies> {
     return currencies.reduce((acc, currency) => (
-      acc[currency] = this.to(currency, amount),
+      acc[currency] = this.from(currency, amount),
       acc
     ), {} as ConversionRates<FromCurrencies>);
   }
