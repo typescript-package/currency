@@ -5,7 +5,13 @@ import { ValueWithCurrency } from '@typedly/currency';
 // Interface.
 import { CurrencyValueOptions } from '@typedly/currency';
 /**
- *
+ * @description
+ * @export
+ * @class CurrencyValue
+ * @template {number} [Value=number] 
+ * @template {string} [Currency=string] 
+ * @template {string} [Currencies=string] 
+ * @extends {Number<Value>}
  */
 export class CurrencyValue<
   Value extends number = number,
@@ -13,36 +19,57 @@ export class CurrencyValue<
   Currencies extends string = string
 > extends Number<Value> {
   /**
-   *
+   * @description
+   * @public
+   * @static
+   * @type {string}
    */
-  public static locales = navigator.language;
+  public static locales: string = navigator.language;
 
   /**
-   *
+   * @description The maximum fraction digits.
+   * @public
+   * @static
+   * @type {number}
    */
-  public static maximumFractionDigits = 2;
+  public static maximumFractionDigits: number = 2;
 
   /**
-   *
+   * @description The minimum fraction digits.
+   * @public
+   * @static
+   * @type {number}
    */
-  public static minimumFractionDigits = 2;
+  public static minimumFractionDigits: number = 2;
 
   /**
-   *
+   * @description The currency.
+   * @public
+   * @readonly
+   * @type {Currency}
    */
   public get currency(): Currency {
     return this.#currency;
   }
 
   /**
-   *
+   * @description Currency symbol.
+   * @public
+   * @readonly
+   * @type {string}
    */
   public get currencySymbol(): string {
     return CurrencyValue.extractCurrencySymbol(this.withCurrency);
   }
 
   /**
-   *
+   * @description Fraction digits.
+   * @public
+   * @readonly
+   * @type {{
+   *     maximum?: number;
+   *     minimum?: number;
+   *   }}
    */
   public get fractionDigits(): {
     maximum?: number;
@@ -55,14 +82,20 @@ export class CurrencyValue<
   }
 
   /**
-   *
+   * @description The locales.
+   * @public
+   * @readonly
+   * @type {(string | undefined)}
    */
   public get locales(): string | undefined {
     return this.#locales;
   }
 
   /**
-   *
+   * @description
+   * @public
+   * @readonly
+   * @type {CurrencyValueOptions}
    */
   public get resolvedOptions(): CurrencyValueOptions {
     return {
@@ -73,74 +106,98 @@ export class CurrencyValue<
   }
 
   /**
-   *
+   * @description
+   * @public
+   * @readonly
+   * @type {string}
    */
   public get formatted(): string {
     return CurrencyValue.format(this.of, this.resolvedOptions);
   }
 
   /**
-   *
+   * @description The maximum fraction digits.
+   * @public
+   * @readonly
+   * @type {(number | undefined)}
    */
   public get maximumFractionDigits(): number | undefined {
     return this.#maximumFractionDigits;
   }
 
   /**
-   *
+   * @description The minimum fraction digits.
+   * @public
+   * @readonly
+   * @type {(number | undefined)}
    */
   public get minimumFractionDigits(): number | undefined {
     return this.#minimumFractionDigits;
   }
 
   /**
-   *
+   * @description The value.
+   * @public
+   * @readonly
+   * @type {Value}
    */
   public get of(): Value {
     return this.valueOf() as Value;
   }
 
   /**
-   *
+   * @description The value with currency.
+   * @public
+   * @readonly
+   * @type {ValueWithCurrency<Value, Currency>}
    * @returns
-   * @angularpackage
    */
   public get withCurrency(): ValueWithCurrency<Value, Currency> {
     return this.#formatAsCurrency(this.#currency);
   }
 
   /**
-   *
+   * @description
+   * @type {Currency}
    */
   #currency: Currency;
 
   /**
-   *
+   * @description
+   * @type {?string}
    */
   #locales?: string;
 
   /**
-   *
+   * @description
+   * @type {number}
    */
-  #maximumFractionDigits = CurrencyValue.maximumFractionDigits;
+  #maximumFractionDigits: number = CurrencyValue.maximumFractionDigits;
 
   /**
-   *
+   * @description
+   * @type {number}
    */
-  #minimumFractionDigits = CurrencyValue.minimumFractionDigits;
+  #minimumFractionDigits: number = CurrencyValue.minimumFractionDigits;
 
   /**
-   *
-   * @param value
-   * @returns
-   * @angularpackage
+   * @description
+   * @public
+   * @static
+   * @param {string} value 
+   * @returns {string} 
    */
   public static extractCurrencySymbol(value: string): string {
     return value.replace(/[\d\., ]/g, '');
   }
 
   /**
-   *
+   * @description
+   * @public
+   * @static
+   * @param {(number | bigint)} value 
+   * @param {?CurrencyValueOptions} [options] 
+   * @returns {string} 
    */
   public static format(
     value: number | bigint,
@@ -155,11 +212,10 @@ export class CurrencyValue<
   }
 
   /**
-   *
-   * @param stringNumber
-   * @param locale
-   * @returns
-   * @angularpackage
+   * @description
+   * @param {string} stringNumber 
+   * @param {string} [locale=this.locales] 
+   * @returns {number} 
    */
   public static formatToNumber = (
     stringNumber: string,
@@ -179,12 +235,15 @@ export class CurrencyValue<
   };
 
   /**
-   *
-   * @param value
-   * @param currency
-   * @param maximumFractionDigits
-   * @returns
-   * @angularpackage
+   * @description
+   * @public
+   * @static
+   * @template {number} Value 
+   * @template {string} Currency 
+   * @param {Value} value 
+   * @param {Currency} currency 
+   * @param {?CurrencyValueOptions} [options] 
+   * @returns {ValueWithCurrency<Value, Currency>} 
    */
   public static formatAsCurrency<Value extends number, Currency extends string>(
     value: Value,
@@ -205,10 +264,13 @@ export class CurrencyValue<
   }
 
   /**
-   *
-   * @param value
-   * @returns
-   * @angularpackage
+   * @description
+   * @public
+   * @static
+   * @param {string} code 
+   * @param {('wide' | 'narrow')} [format='narrow'] 
+   * @param {string} [locales=this.locales] 
+   * @returns {string} 
    */
   public static getCurrencySymbol(
     code: string,
@@ -220,20 +282,22 @@ export class CurrencyValue<
   }
 
   /**
-   *
-   * @param value
-   * @returns
-   * @angularpackage
+   * @description
+   * @private
+   * @static
+   * @param {*} value 
+   * @returns {number} 
    */
   private static replaceNaN(value: any): number {
     return isNaN(value) ? 0 : value;
   }
 
   /**
-   *
-   * @param value
-   * @param currency
-   * @angularpackage
+   * Creates an instance of `CurrencyValue`.
+   * @constructor
+   * @param {Value} value 
+   * @param {Currency} currency 
+   * @param {?CurrencyValueOptions} [options] 
    */
   constructor(
     value: Value,
@@ -253,10 +317,12 @@ export class CurrencyValue<
   }
 
   /**
-   *
-   * @param currency
-   * @returns
-   * @angularpackage
+   * @description
+   * @public
+   * @template {Currencies} PickCurrency 
+   * @param {PickCurrency} currency 
+   * @param {?CurrencyValueOptions} [options] 
+   * @returns {ValueWithCurrency<Value, PickCurrency>} 
    */
   public getValueAsCurrency<PickCurrency extends Currencies>(
     currency: PickCurrency,
@@ -266,10 +332,11 @@ export class CurrencyValue<
   }
 
   /**
-   *
-   * @param value
-   * @returns
-   * @angularpackage
+   * @description
+   * @template {Currency | Currencies} PickCurrency 
+   * @param {PickCurrency} currency 
+   * @param {?CurrencyValueOptions} [options] 
+   * @returns {ValueWithCurrency<Value, PickCurrency>} 
    */
   #formatAsCurrency<PickCurrency extends Currency | Currencies>(
     currency: PickCurrency,
