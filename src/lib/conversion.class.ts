@@ -1,7 +1,7 @@
 // Class.
 import { ConversionBase } from './conversion-base.abstract';
 /**
- * @description The concrete class for conversion.
+ * @description The concrete class implementation for currency conversion.
  * @export
  * @class Conversion
  * @template {number} Amount The type of amount to convert.
