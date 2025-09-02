@@ -23,10 +23,10 @@ A **lightweight** TypeScript package for conversion/exchanges fiat or cryptocurr
     - `ConversionBase`
     - `ConversionCore`
   - **Class**
-    - `Conversion`
-    - `Currencies`
-    - `CurrencyValue`
-    - `Exchange`
+    - [`Conversion`](#conversion)
+    - [`Currencies`](#currencies)
+    - [`CurrencyValue`](#currencyvalue)
+    - [`Exchange`](#exchange)
 - [Contributing](#contributing)
 - [Support](#support)
 - [Code of Conduct](#code-of-conduct)
