@@ -1,13 +1,13 @@
 
 /**
- * @description
+ * @description The class to store codes of the currencies.
  * @export
  * @class Currencies
  * @template {string} Codes 
  */
 export class Currencies<Codes extends string> {
   /**
-   * @description
+   * @description Returns the set of currency codes.
    * @public
    * @readonly
    * @type {Set<Codes>}
@@ -17,7 +17,7 @@ export class Currencies<Codes extends string> {
   }
 
   /**
-   * @description
+   * @description Privately stored currency codes.
    * @type {Set<Codes>}
    */
   #codes: Set<Codes> = new Set();
@@ -32,9 +32,9 @@ export class Currencies<Codes extends string> {
   }
 
   /**
-   * @description
+   * @description Adds the currency codes.
    * @public
-   * @param {...Codes>[]} codes 
+   * @param {...Codes[]} codes Currency codes to add.
    * @returns {this} 
    */
   public add(...codes: Codes[]): this {
@@ -43,7 +43,7 @@ export class Currencies<Codes extends string> {
   }
 
   /**
-   * @description
+   * @description Clears the currency codes.
    * @public
    * @returns {this} 
    */
@@ -53,7 +53,7 @@ export class Currencies<Codes extends string> {
   }
 
   /**
-   * @description
+   * @description Deletes the specified currency codes.
    * @public
    * @param {...Codes[]} codes 
    * @returns {this} 
@@ -64,7 +64,7 @@ export class Currencies<Codes extends string> {
   }
 
   /**
-   * @description
+   * @description Returns an array of all currency codes.
    * @public
    * @returns {Codes[]} 
    */
@@ -73,7 +73,7 @@ export class Currencies<Codes extends string> {
   }
 
   /**
-   * @description
+   * @description Checks if the specified currency codes are present.
    * @public
    * @param {...Codes[]} codes 
    * @returns {boolean} 
