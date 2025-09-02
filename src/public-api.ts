@@ -4,8 +4,10 @@
 
 export {
   // Abstract.
-  Conversion,
+  ConversionBase,
+  ConversionCore,
   // Class.
+  Conversion,
   Currencies,
   CurrencyValue,
   Exchange
