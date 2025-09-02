@@ -1,0 +1,45 @@
+{
+  "name": "@typescript-package/currency",
+  "version": "0.1.0",
+  "author": "wwwdev.io <dev@wwwdev.io>",
+  "description": "A lightweight package for conversion/exchanges fiat or cryptocurrencies with formatted value.",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "peerDependencies": {
+    "@typedly/currency": "^0.1.0",
+    "@typescript-package/range": "^1.0.0"
+  },
+  "scripts": {
+    "prepublishOnly": "npm run pkg && npm run clean",
+    "pkg": "npm pkg delete module dependencies",
+    "clean": "npm pkg delete scripts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/typescript-package/currency.git"
+  },
+  "bugs": {
+    "url": "https://github.com/typescript-package/currency/issues"
+  },
+  "keywords": [
+    "@typescript-package",
+    "@typescript-package/currency",
+    "Conversion",
+    "Currencies",
+    "Exchange"
+  ],
+  "funding": [
+    {
+      "type": "stripe",
+      "url": "https://donate.stripe.com/dR614hfDZcJE3wAcMM"
+    },
+    {
+      "type": "revolut",
+      "url": "https://checkout.revolut.com/pay/048b10a3-0e10-42c8-a917-e3e9cb4c8e29"
+    }
+  ],
+  "sideEffects": false
+}
