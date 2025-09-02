@@ -1,12 +1,12 @@
 // Class.
 import { ConversionBase } from './conversion-base.abstract';
 /**
- * @description
+ * @description The concrete class for conversion.
  * @export
  * @class Conversion
- * @template {number} Amount 
- * @template {string} Currency 
- * @template {string} [Currencies=string] 
+ * @template {number} Amount The type of amount to convert.
+ * @template {string} Currency The type of currency to convert from.
+ * @template {string} [Currencies=string] The type of currencies to convert to.
  */
 export class Conversion<
   Amount extends number,
