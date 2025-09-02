@@ -43,7 +43,6 @@ export abstract class ConversionBase<
    * @description Privately stored amount to convert.
    * @type {Amount}
    */
-  // #amount: Amount;
   #amount: Amount;
 
   /**
@@ -87,7 +86,7 @@ export abstract class ConversionBase<
    * @public
    * @template {Currencies} FromCurrencies
    * @param {FromCurrencies[]} currencies The currencies to convert from to base currency.
-   * @param {Amount} [amount=this.amount] Optional amount to convert.
+   * @param {Amount} [amount=this.amount] Optional amount for each currency to convert.
    * @returns {ConversionRates<FromCurrencies>}
    */
   public fromMany<FromCurrencies extends Currencies>(
@@ -111,6 +110,36 @@ export abstract class ConversionBase<
     return this;
   }
 
+  /**
+   * @description Converts the base or specified amount from the given currencies to the base currency and sum the result.
+   * @public
+   * @template {Currencies} FromCurrencies
+   * @param {FromCurrencies[]} currencies The currencies to convert from to base currency.
+   * @param {Amount} [amount=this.amount] The custom amount for each currency to convert.
+   * @returns {number}
+   */
+  public sumFrom<FromCurrencies extends Currencies>(
+    currencies: FromCurrencies[],
+    amount: Amount = this.amount
+  ): number {
+    return currencies.reduce((sum, currency) => sum + this.from(currency, amount), 0);
+  }
+
+  /**
+   * @description Converts the specified or custom amount base currency to the given currencies and sum the result.
+   * @public
+   * @template {Currencies} ToCurrencies 
+   * @param {ToCurrencies[]} currencies The currencies to convert to base currency and sum.
+   * @param {Amount} [amount=this.amount] The custom amount for each currency to convert.
+   * @returns {number} 
+   */
+  public sumTo<ToCurrencies extends Currencies>(
+    currencies: ToCurrencies[],
+    amount: Amount = this.amount,
+  ): number {
+    return currencies.reduce((sum, currency) => sum + this.to(currency, amount), 0);
+  }
+
   /** 
    * @inheritdoc
    */
@@ -131,15 +160,15 @@ export abstract class ConversionBase<
    * @public
    * @template {Currencies} ToCurrencies
    * @param {ToCurrencies[]} currencies The currencies to convert base currency to.
+   * @param {Amount} [amount=this.amount] Optional amount for each currency to convert. 
    * @returns {ConversionRates<ToCurrencies>}
    */
   public toMany<ToCurrencies extends Currencies>(
     currencies: ToCurrencies[],
-    amount: Amount = this.amount
+    amount: Amount = this.amount,
   ): ConversionRates<ToCurrencies> {
     return currencies.reduce((acc, currency) => (
-      acc[currency] = this.to(currency, amount),
-      acc
+      acc[currency] = this.to(currency, amount), acc
     ), {} as ConversionRates<ToCurrencies>);
   }
 }
