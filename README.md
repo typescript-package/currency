@@ -136,7 +136,7 @@ value.of; // 42345255.356
 value.currencySymbol; // $
 value.formatted; // 42,345,255.36
 value.getValueAsCurrency('USD'); // $42,345,255.36
-value.isBetweenEvery([43345255, 52345255.356]); // false
+value.isBetweenEvery([43345255, 52345255.356], [3500, 127000]); // false
 value.lessThan(52345255.356); // true
 
 ```
